@@ -105,4 +105,32 @@ router.post("/:id/comments", (req, res) => {
     }
 })
 
+router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const commentUD = req.body;
+
+    if(!commentUD.title || !commentUD.contents){
+        res.status(400).json({ errorMessage: "Please provide title and contents for post"});
+    }else {
+        db.update(id, commentUD)
+        .then(data => {
+            if (data) {
+                db.findById(id)
+                .then(data => {
+                    res.status(200).json(data)
+                })
+                .catch(error => {
+                    res.send(500).json({
+                        error: "The user info couldn't be modified"
+                    });
+                });
+            }else {
+                res.status(404).json({
+                    message: "The user with the specified ID does not exist"
+                });
+            }
+        })
+    }
+});
+
 module.exports =router;
