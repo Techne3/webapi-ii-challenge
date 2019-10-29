@@ -1,15 +1,15 @@
 const express = require('express');
 
 // 1
-const hubsRouter = require('./routers/hubsRouter');
+const hubsRouter = require('./routers/postRouter');
 
 const server = express();
 
 server.use(express.json());
 
 // 2
-server.use('/api/hubs', hubsRouter);
+server.use('/api/post', hubsRouter);
 
-server.listen(6000, () => {
-  console.log('\n*** Server Running on http://localhost:6000 ***\n');
+server.listen(7000, () => {
+  console.log('\n*** Server Running on http://localhost:7000 ***\n');
 });
