@@ -51,7 +51,29 @@ router.delete(`/:id`, (req,res ) => {
     .catch(err => {
         res.status(500).json({error: "The post could not be removed"})
     })
+});
+
+//create a new post for DB
+router.post('/', (req,res) => {
+
+    const poster = req.body
+
+    if(!poster.title|| !poster.contents){
+        res.status(400).json({message:"Please provide title and contents for the post."})
+    }else{
+        db.insert(poster)
+        .then(user=> {
+            res.status(201).json(user)
+        })
+        .catch(err => {
+            res.status(500).json({message: 'There was an error while saving th post to the database'})
+        })
+    }
+
 })
+
+
+
 
 
 module.exports =router;
